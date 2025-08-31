@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/chandraprakash/Developer/DSA/samsung",
+      "program": "/Users/chandraprakash/Developer/DSA/samsung/build/Debug/outDebug"
+    }
+  ]
+}
