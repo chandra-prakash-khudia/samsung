@@ -1,20 +1,31 @@
 //credit for logic goes to the one and only chandra prakash khudia
-
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
-long long simulate(vector<long long> arr, int k) {
-    long long total = 0;
-    int n = arr.size();
+long long temp[1000];
+long long sorted_arr[1000];
 
-    vector<long long> sorted_arr = arr;
-    for (int step = 0; step < k; step++) {
-        sort(sorted_arr.rbegin(), sorted_arr.rend());
-
-        vector<long long> temp(n);
-        for (int i = 0; i < n; ++i) {
-            temp[i] = sorted_arr[i] * (i + 1);
+void sort_desc(long long arr[], int n) {
+    for (int i = 0; i < n - 1; ++i) {
+        int max_idx = i;
+        for (int j = i + 1; j < n; ++j) {
+            if (arr[j] > arr[max_idx]) max_idx = j;
         }
+        if (max_idx != i) {
+            long long tmp = arr[i];
+            arr[i] = arr[max_idx];
+            arr[max_idx] = tmp;
+        }
+    }
+}
+
+long long simulate(long long arr[], int n, int k) {
+    long long total = 0;
+    for (int i = 0; i < n; ++i) sorted_arr[i] = arr[i];
+
+    for (int step = 0; step < k; ++step) {
+        sort_desc(sorted_arr, n);
+        for (int i = 0; i < n; ++i) temp[i] = sorted_arr[i] * (i + 1);
 
         long long min_val = temp[0];
         int min_index = 0;
@@ -25,10 +36,7 @@ long long simulate(vector<long long> arr, int k) {
             }
         }
 
-        for (int i = 0; i <= min_index; ++i) {
-            sorted_arr[i] -= sorted_arr[min_index];
-        }
-
+        for (int i = 0; i <= min_index; ++i) sorted_arr[i] -= sorted_arr[min_index];
         total += min_val;
     }
 
@@ -36,15 +44,16 @@ long long simulate(vector<long long> arr, int k) {
 }
 
 int main() {
-    int t;cin>>t;
-    while(t--){
-    int n, k;
-    cin >> n >> k;
-    vector<long long> arr(n);
-    for (int i = 0; i < n; ++i) cin >> arr[i];
-
-    long long ans = simulate(arr, k);
-    cout << ans << endl;
-
+    int t;
+    cin >> t;
+    while (t--) {
+        int n, k;
+        cin >> n >> k;
+        long long arr[1000];
+        for (int i = 0; i < n; ++i) cin >> arr[i];
+        long long ans = simulate(arr, n, k);
+        cout << ans << endl;
     }
+    return 0;
 }
+
