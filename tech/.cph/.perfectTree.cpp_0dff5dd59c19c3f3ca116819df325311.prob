@@ -1,0 +1,1 @@
+{"name":"Local: perfectTree","url":"/Users/chandraprakash/Developer/DSA/samsung/tech/perfectTree.cpp","tests":[{"id":1757235797890,"input":"11\n1 2 3 4 5 -1 6 -1 -1 7 8\n","output":"4\n5\n8\n7\n6\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/chandraprakash/Developer/DSA/samsung/tech/perfectTree.cpp","group":"local","local":true}

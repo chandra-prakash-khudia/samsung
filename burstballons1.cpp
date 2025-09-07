@@ -37,46 +37,46 @@ int n;
 int nums[20];
 int dp[20][20];
 
-// int score(int l, int i, int r) {
-//     if (l == 0 && r == n + 1) return nums[i];    // no neighbors
-//     if (l == 0)               return nums[r]  ;  // only right
-//     if (r == n + 1)           return nums[l];    // only left
-//     return nums[l] * nums[r];                        // both neighbors
-// }
+int score(int l, int i, int r) {
+    if (l == 0 && r == n + 1) return nums[i];    // no neighbors
+    if (l == 0)               return nums[r]  ;  // only right
+    if (r == n + 1)           return nums[l];    // only left
+    return nums[l] * nums[r];                        // both neighbors
+}
 
-// int solve(int nums[], int l, int r){
-//     // base case
-//     if(l+1>=r){
-//         return 0;
-//     }
-//     if(dp[l][r] !=-1) return dp[l][r];
-//     int temp =0;
-//     for(int k = l+1 ; k<r; k++){
-//         temp = max(temp,score(l,k,r)+ solve(nums,l,k) + solve(nums,k,r));
-//     }
-//     dp[l][r] = temp;
-
-//     return dp[l][r] ;
-// }
-void solve(){
-    // len = r-l
-for(int len = 2 ; len<=n+1; len++){
-   for(int l = 0;l+len<=n+1;l++){
-    int r = l+len;
-    int best = 0;
-    for(int k =l+1 ; k<r ; k++){
-        int gain =0;
-        if(l==0 && r == n+1) gain = nums[k];
-        else if(l==0) gain = nums[r];
-        else if(r==n+1) gain = nums[l];
-        else gain = nums[l]*nums[r];
-        int val = dp[l][k] + dp[k][r] +gain ;
-        best = max(best, val);
+int solve(int nums[], int l, int r){
+    // base case
+    if(l+1>=r){
+        return 0;
     }
-    dp[l][r] = best;
-   }
+    if(dp[l][r] !=-1) return dp[l][r];
+    int temp =0;
+    for(int k = l+1 ; k<r; k++){
+        temp = max(temp,score(l,k,r)+ solve(nums,l,k) + solve(nums,k,r));
+    }
+    dp[l][r] = temp;
+
+    return dp[l][r] ;
 }
-}
+// void solve(){
+//     // len = r-l
+// for(int len = 2 ; len<=n+1; len++){
+//    for(int l = 0;l+len<=n+1;l++){
+//     int r = l+len;
+//     int best = 0;
+//     for(int k =l+1 ; k<r ; k++){
+//         int gain =0;
+//         if(l==0 && r == n+1) gain = nums[k];
+//         else if(l==0) gain = nums[r];
+//         else if(r==n+1) gain = nums[l];
+//         else gain = nums[l]*nums[r];
+//         int val = dp[l][k] + dp[k][r] +gain ;
+//         best = max(best, val);
+//     }
+//     dp[l][r] = best;
+//    }
+// }
+// }
 int main(){
 
         cin>>n;
