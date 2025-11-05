@@ -56,149 +56,152 @@
 
 // // If you have to type 18-> 2 operations. (Each touch is considered an operation),br> If you have to type 5 -> '1+4=' that requires 4 operations. There could be other ways to make '5'.
 // // */
-// #include <iostream>
-// using namespace std;
-// const unsigned long long maxi =100000000000;
-// struct node
-// {
-//     int data;
-//     int touch;
-//     bool prev;
-// };
+#include <iostream>
+using namespace std;
+const unsigned long long maxi = 100000000000;
+struct node
+{
+    int data;
+    int touch;
+    bool prev;
+};
 
-// node q[maxi];
-// int vis[10000];
-// int digit[10];
-// int op[4];
+node q[maxi];
+int vis[10000];
+int digit[10];
+int op[4];
 
-// int front, back, n, o, lim, num, len;
+int front, back, n, o, lim, num, len;
 
-// void init()
-// {
-//     front = 0;
-//     back=-1;
-//     len = 0;
-//     return;
-// }
+void init()
+{
+    front = 0;
+    back = -1;
+    len = 0;
+    return;
+}
 
-// void push(int data, int touch, bool x)
-// {
-   
-    
-//     back = (1+back)%maxi;
-//     q[back].data = data;
-//     q[back].touch = touch;
-//     q[back].prev = x;
-//     len++;
-//     return;
-// }
+void push(int data, int touch, bool x)
+{
 
-// node pop()
-// {
-//     node temp = q[front];
-//       front = (front + 1) % maxi;
-//     len--;
-//     return temp;
-// }
+    back = (1 + back) % maxi;
+    q[back].data = data;
+    q[back].touch = touch;
+    q[back].prev = x;
+    len++;
+    return;
+}
 
-// bool isempty()
-// {
-//     return len == 0;
-// }
+node pop()
+{
+    node temp = q[front];
+    front = (front + 1) % maxi;
+    len--;
+    return temp;
+}
 
-// int solve()
-// {
-//     int ans=-1;
-//     while (!isempty())
-//     {
-//         node temp = pop();
-//         int data = temp.data;
-//         int tt = temp.touch;
+bool isempty()
+{
+    return len == 0;
+}
 
-//         if (tt > lim)
-//         {
-//             continue;
-//         }
+int solve()
+{
+    int ans = -1;
+    while (!isempty())
+    {
+        node temp = pop();
+        int data = temp.data;
+        int tt = temp.touch;
 
-//         if (data == num)
-//         {
-//             ans=tt  + temp.prev;
-//             break;
-//         }
+        if (tt > lim)
+        {
+            continue;
+        }
 
-//         if (vis[data]==0)
-//         {
-//             for (int i = 0; i < n; i++)
-//             {
-//                 // if(10 * data + digit[i] <)
-//                 push(10 * data + digit[i], tt + 1,0);
-//             }
+        if (data == num)
+        {
+            ans = tt + temp.prev;
+            break;
+        }
 
-//             for (int i = 0; i < o; i++)
-//             {
-//                 for (int j = 0; j < 10000; j++)
-//                 {
-//                     if (vis[j])
-//                     {
+        if (vis[data] == 0)
+        {
+            for (int i = 0; i < n; i++)
+            {
+                // if(10 * data + digit[i] <)
+                if (temp.prev == 1)
+                {
+                    push(10 * data + digit[i], tt + 2, 0);
+                }
+                else
+                {
+                    push(10 * data + digit[i], tt + 1, 0);
+                }
+            }
 
-//                         if (op[i] == 1)
-//                         {
-//                             //   cout << data + j << endl;
-//                             push(data + j, tt + 2,1);
-//                         }
-//                         else if (op[i] == 2 && data - j >= 0)
-//                         {
-//                             //   cout << data - j << endl;
-//                             push(data - j, tt + 2,1);
-//                         }
-//                         else if (op[i] == 3 && data*j < 1000)
-//                         {
-//                             //   cout << data * j << endl;
-//                             push(data * j, tt + 2,1);
-//                         }
-//                         else if (op[i] == 4 && j != 0)
-//                         {
-//                             //   cout << data / j << endl;
-//                             push(data / j, tt + 2,1);
-//                         }
-//                     }
-//                 }
-//             }
-//             vis[data] = 1;
-//         }
-//     }
-//     return ans;
-// }
+            for (int i = 0; i < o; i++)
+            {
+                for (int j = 0; j < 10000; j++)
+                {
+                    if (vis[j])
+                    {
 
-// int main()
-// {
-//     int t;
-//     cin >> t;
-//     while (t--)
-//     {
-//         cin >> n >> o >> lim;
-//         int x;
-//         init();
-//         for(int i =0 ; i<10000;i++){
-//             vis[i] =0;
-//         }
-//         for (int i = 0; i < n; i++)
-//         {
-//             cin >> x;
-//             digit[i] = x;
-//             push(x, 1,0);
-//         }
-//         for (int i = 0; i < o; i++)
-//         {
-//             cin >> op[i];
-            
-//         }
-//         cin >> num;
-//         cout << solve() << endl;
-        
-//     }
+                        if (op[i] == 1)
+                        {
+                            //   cout << data + j << endl;
+                            push(data + j, tt + 2, 1);
+                        }
+                        else if (op[i] == 2 && data - j >= 0)
+                        {
+                            //   cout << data - j << endl;
+                            push(data - j, tt + 2, 1);
+                        }
+                        else if (op[i] == 3 && data * j < 1000)
+                        {
+                            //   cout << data * j << endl;
+                            push(data * j, tt + 2, 1);
+                        }
+                        else if (op[i] == 4 && j != 0)
+                        {
+                            //   cout << data / j << endl;
+                            push(data / j, tt + 2, 1);
+                        }
+                    }
+                }
+            }
+            vis[data] = 1;
+        }
+    }
+    return ans;
+}
 
-//     return 0;
-// }
+int main()
+{
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        cin >> n >> o >> lim;
+        int x;
+        init();
+        for (int i = 0; i < 10000; i++)
+        {
+            vis[i] = 0;
+        }
+        for (int i = 0; i < n; i++)
+        {
+            cin >> x;
+            digit[i] = x;
+            push(x, 1, 0);
+        }
+        for (int i = 0; i < o; i++)
+        {
+            cin >> op[i];
+        }
+        cin >> num;
+        cout << solve() << endl;
+    }
 
-
+    return 0;
+}

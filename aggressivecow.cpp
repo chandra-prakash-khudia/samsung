@@ -33,8 +33,7 @@ bool check(int arr[],int dis){
     return false;
 }
 int solve(int arr[]){
-    // first of all sort the array
-
+    
     int start = 1;
     int end = arr[n-1] - arr[0];
     int ans = -1;

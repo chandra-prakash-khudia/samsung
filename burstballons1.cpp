@@ -58,25 +58,25 @@ int solve(int nums[], int l, int r){
 
     return dp[l][r] ;
 }
-// void solve(){
-//     // len = r-l
-// for(int len = 2 ; len<=n+1; len++){
-//    for(int l = 0;l+len<=n+1;l++){
-//     int r = l+len;
-//     int best = 0;
-//     for(int k =l+1 ; k<r ; k++){
-//         int gain =0;
-//         if(l==0 && r == n+1) gain = nums[k];
-//         else if(l==0) gain = nums[r];
-//         else if(r==n+1) gain = nums[l];
-//         else gain = nums[l]*nums[r];
-//         int val = dp[l][k] + dp[k][r] +gain ;
-//         best = max(best, val);
-//     }
-//     dp[l][r] = best;
-//    }
-// }
-// }
+void solve(){
+    // len = r-l
+for(int len = 2 ; len<=n+1; len++){
+   for(int l = 0;l+len<=n+1;l++){
+    int r = l+len;
+    int best = 0;
+    for(int k =l+1 ; k<r ; k++){
+        int gain =0;
+        if(l==0 && r == n+1) gain = nums[k];
+        else if(l==0) gain = nums[r];
+        else if(r==n+1) gain = nums[l];
+        else gain = nums[l]*nums[r];
+        int val = dp[l][k] + dp[k][r] +gain ;
+        best = max(best, val);
+    }
+    dp[l][r] = best;
+   }
+}
+}
 int main(){
 
         cin>>n;

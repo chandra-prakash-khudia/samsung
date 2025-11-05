@@ -1,149 +1,149 @@
 #include <iostream>
 using namespace std;
 
-int n, m;
-int graph[11][11];
-int path[11];
-bool visited[11];
-int cycles[100][11]; // store up to 100 cycles
-int cycleLen[100];
-int cycleCount = 0;
+// int n, m;
+// int graph[11][11];
+// int path[11];
+// bool visited[11];
+// int cycles[100][11]; // store up to 100 cycles
+// int cycleLen[100];
+// int cycleCount = 0;
 
 
 
-void store(int idx, int depth)
-{
-    int temp[11], len = 0;
-    for (int i = idx; i <= depth; i++)
-    {
-        temp[len++] = path[i];
-    }
-    // stored the path in temp
-    // check whether this cycle
-    for (int i = 0; i < cycleCount; i++)
-    {
-        if (cycleLen[i] == len)
-        {
-            bool found = true;
-            for (int k = 0; k < len; k++)
-            {
-                if (cycles[i][k] != temp[k])
-                {
-                    found = false;
-                    break;
-                }
-            }
-            if (found)
-                return;
-        }
-    }
-    for (int i = 0; i < len; i++)
-    {
-        cycles[cycleCount][i] = temp[i];
-    }
-    cycleLen[cycleCount] = len;
-    cycleCount++;
-}
+// void store(int idx, int depth)
+// {
+//     int temp[11], len = 0;
+//     for (int i = idx; i <= depth; i++)
+//     {
+//         temp[len++] = path[i];
+//     }
+//     // stored the path in temp
+//     // check whether this cycle
+//     for (int i = 0; i < cycleCount; i++)
+//     {
+//         if (cycleLen[i] == len)
+//         {
+//             bool found = true;
+//             for (int k = 0; k < len; k++)
+//             {
+//                 if (cycles[i][k] != temp[k])
+//                 {
+//                     found = false;
+//                     break;
+//                 }
+//             }
+//             if (found)
+//                 return;
+//         }
+//     }
+//     for (int i = 0; i < len; i++)
+//     {
+//         cycles[cycleCount][i] = temp[i];
+//     }
+//     cycleLen[cycleCount] = len;
+//     cycleCount++;
+// }
 
 
 
-void dfs(int u, int depth)
-{
-    visited[u] = true;
-    path[depth] = u;
-    for (int v = 1; v <= n; v++)
-    {
-        if (graph[u][v])
-        {
-            if (!visited[v])
-                dfs(v, depth + 1);
-            else
-            {
-                for (int i = 0; i <= depth; i++)
-                {
-                    if (path[i] == v)
-                    {
-                        store(i, depth);
-                        break;
-                    }
-                }
-            }
-        }
-    }
-    visited[u] = false;
-}
-void sortArray(int arr[], int len)
-{
-    for (int i = 0; i < len; i++)
-    {
-        for (int j = i + 1; j < len; j++)
-        {
-            if (arr[j] < arr[i])
-            {
-                int tmp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = tmp;
-            }
-        }
-    }
-}
+// void dfs(int u, int depth)
+// {
+//     visited[u] = true;
+//     path[depth] = u;
+//     for (int v = 1; v <= n; v++)
+//     {
+//         if (graph[u][v])
+//         {
+//             if (!visited[v])
+//                 dfs(v, depth + 1);
+//             else
+//             {
+//                 for (int i = 0; i <= depth; i++)
+//                 {
+//                     if (path[i] == v)
+//                     {
+//                         store(i, depth);
+//                         break;
+//                     }
+//                 }
+//             }
+//         }
+//     }
+//     visited[u] = false;
+// }
+// void sortArray(int arr[], int len)
+// {
+//     for (int i = 0; i < len; i++)
+//     {
+//         for (int j = i + 1; j < len; j++)
+//         {
+//             if (arr[j] < arr[i])
+//             {
+//                 int tmp = arr[i];
+//                 arr[i] = arr[j];
+//                 arr[j] = tmp;
+//             }
+//         }
+//     }
+// }
 
-int main()
-{
-    cin >> n >> m;
+// int main()
+// {
+//     cin >> n >> m;
 
-    // init
-    for (int i = 1; i <= n; i++)
-    {
-        for (int j = 1; j <= n; j++)
-            graph[i][j] = 0;
-        visited[i] = false;
-    }
+//     // init
+//     for (int i = 1; i <= n; i++)
+//     {
+//         for (int j = 1; j <= n; j++)
+//             graph[i][j] = 0;
+//         visited[i] = false;
+//     }
 
-    for (int i = 0; i < m; i++)
-    {
-        int u, v;
-        cin >> u >> v;
-        graph[u][v] = 1;
-    }
+//     for (int i = 0; i < m; i++)
+//     {
+//         int u, v;
+//         cin >> u >> v;
+//         graph[u][v] = 1;
+//     }
 
-    // run dfs from each node
-    for (int i = 1; i <= n; i++)
-    {
-        dfs(i, 0);
-    }
+//     // run dfs from each node
+//     for (int i = 1; i <= n; i++)
+//     {
+//         dfs(i, 0);
+//     }
 
-    if (cycleCount == 0)
-    {
-        cout << -1 << endl;
-        return 0;
-    }
+//     if (cycleCount == 0)
+//     {
+//         cout << -1 << endl;
+//         return 0;
+//     }
 
-    // find cycle with minimum sum
-    int bestIdx = 0, minSum = 1e9;
-    for (int c = 0; c < cycleCount; c++)
-    {
-        int sum = 0;
-        for (int j = 0; j < cycleLen[c]; j++)
-            sum += cycles[c][j];
-        if (sum < minSum)
-        {
-            minSum = sum;
-            bestIdx = c;
-        }
-    }
+//     // find cycle with minimum sum
+//     int bestIdx = 0, minSum = 1e9;
+//     for (int c = 0; c < cycleCount; c++)
+//     {
+//         int sum = 0;
+//         for (int j = 0; j < cycleLen[c]; j++)
+//             sum += cycles[c][j];
+//         if (sum < minSum)
+//         {
+//             minSum = sum;
+//             bestIdx = c;
+//         }
+//     }
 
-    // sort the chosen cycle
-    sortArray(cycles[bestIdx], cycleLen[bestIdx]);
+//     // sort the chosen cycle
+//     sortArray(cycles[bestIdx], cycleLen[bestIdx]);
 
-    // print
-    for (int j = 0; j < cycleLen[bestIdx]; j++)
-    {
-        cout << cycles[bestIdx][j] << (j + 1 == cycleLen[bestIdx] ? '\n' : ' ');
-    }
+//     // print
+//     for (int j = 0; j < cycleLen[bestIdx]; j++)
+//     {
+//         cout << cycles[bestIdx][j] << (j + 1 == cycleLen[bestIdx] ? '\n' : ' ');
+//     }
 
-    return 0;
-}
+//     return 0;
+// }
 // /* https://sapphireengine.com/@/6tfphj */
 // /* https://cses.fi/problemset/task/1678 */
 // #include<iostream>
@@ -212,3 +212,62 @@ int main()
 
 // 	return 0;
 // }
+
+
+
+const int MAXN = 1e5 + 5;
+vector<int> adj[MAXN];
+vector<int> visited, inStack, parent;
+int startNode = -1, endNode = -1;
+
+bool dfs(int u) {
+    visited[u] = 1;
+    inStack[u] = 1;
+    for (int v : adj[u]) {
+        if (!visited[v]) {
+            parent[v] = u;
+            if (dfs(v)) return true;
+        } else if (inStack[v]) {
+            // found a cycle
+            startNode = v;
+            endNode = u;
+            return true;
+        }
+    }
+    inStack[u] = 0;
+    return false;
+}
+
+int main() {
+    int n, m;
+    cin >> n >> m;
+    for (int i = 0; i < m; i++) {
+        int a, b;
+        cin >> a >> b;
+        adj[a].push_back(b);
+    }
+
+    visited.assign(n + 1, 0);
+    inStack.assign(n + 1, 0);
+    parent.assign(n + 1, -1);
+
+    for (int i = 1; i <= n; i++) {
+        if (!visited[i] && dfs(i)) {
+            // reconstruct cycle
+            vector<int> cycle;
+            cycle.push_back(startNode);
+            for (int v = endNode; v != startNode; v = parent[v])
+                cycle.push_back(v);
+            cycle.push_back(startNode);
+            reverse(cycle.begin(), cycle.end());
+
+            cout << cycle.size() << "\n";
+            for (int c : cycle) cout << c << " ";
+            cout << "\n";
+            return 0;
+        }
+    }
+
+    cout << "IMPOSSIBLE\n";
+    return 0;
+}
