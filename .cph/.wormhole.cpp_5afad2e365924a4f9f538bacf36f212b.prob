@@ -1,0 +1,1 @@
+{"name":"Local: wormhole","url":"/Users/chandraprakash/Developer/DSA/samsung/wormhole.cpp","tests":[{"id":1762374213109,"input":"0 0\n10 10\n2\n1 2 9 8 3\n6 6 7 7 2","output":"9"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/chandraprakash/Developer/DSA/samsung/wormhole.cpp","group":"local","local":true}

@@ -32,6 +32,7 @@ public:
             
         }
         vector<vector<int>>ans;
+        
         set<pair<int,int>>st;
         for(auto it: upper){
             st.insert({it.first , it.second});
